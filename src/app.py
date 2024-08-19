@@ -10,6 +10,8 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 # from models import Person
 
@@ -18,6 +20,8 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+CORS(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -36,6 +40,9 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
+
+app.config["JWT_SECRET_KEY"] = "griffithgutsberserk-88"  # Change this!
+jwt = JWTManager(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
