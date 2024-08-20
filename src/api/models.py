@@ -12,9 +12,9 @@ class User(db.Model):
     # Relación uno a muchos: un usuario puede escribir muchas reseñas
     reviews = db.relationship('Review', backref='author', lazy=True)
     # Relación uno a muchos: un usuario puede crear varios posts
-    posts = db.relationship('Post', backref='author', lazy=True)
+    posts = db.relationship('Post', backref='author', lazy=True, cascade="all, delete-orphan")
     # Relación uno a muchos: un usuario puede crear varios comentarios
-    comments = db.relationship('Comment', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='author', lazy=True, cascade="all, delete-orphan")
     # Relación muchos a muchos: usuarios pueden asistir a varios eventos
     events = db.relationship('Event', secondary='user_events', back_populates='attendees')
     # Preferencias de géneros de videojuegos
@@ -42,7 +42,7 @@ class Game(db.Model):
     genres = db.Column(db.String(200), nullable=False)  # Géneros del videojuego
     about = db.Column(db.Text, nullable=False)  # Descripción del videojuego
     # Relación uno a muchos: un videojuego puede tener muchas reseñas
-    reviews = db.relationship('Review', backref='game', lazy=True)
+    reviews = db.relationship('Review', backref='game', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<Game {self.name}>'
@@ -112,7 +112,7 @@ class Post(db.Model):
     image_url = db.Column(db.String(255))  # URL de la imagen (opcional)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # ID del usuario que creó el post
     # Relación uno a muchos: un post puede tener muchos comentarios
-    comments = db.relationship('Comment', backref='post', lazy=True)
+    comments = db.relationship('Comment', backref='post', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<Post {self.title}>'
