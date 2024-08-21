@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			login: async (email, password) => {
 				try {
-					const response = await fetch("https://congenial-lamp-7jrrwjqwj7g3p69w-3001.app.github.dev/api/login", {
+					const response = await fetch(process.env.BACKEND_URL + "/api/login", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
@@ -36,7 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createUser: async (email, password) => {
 				try {
-					const response = await fetch("https://congenial-lamp-7jrrwjqwj7g3p69w-3001.app.github.dev/api/signup", {
+					const response = await fetch(process.env.BACKEND_URL + "/api/signup", {
 						method: "POST", // Especifica que la solicitud es de tipo POST
 						headers: {
 							"Content-Type": "application/json", // Especifica que el contenido es JSON
@@ -67,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Obtener el token de acceso desde el localStorage
 					const accessToken = localStorage.getItem("accessToken");
 					// Realizar la solicitud GET a la API usando fetch
-					const response = await fetch("https://congenial-lamp-7jrrwjqwj7g3p69w-3001.app.github.dev/api/current-user", {
+					const response = await fetch(process.env.BACKEND_URL + "/api/current-user", {
 						method: "GET", // Método de la solicitud
 						headers: {
 							// Incluir el token en los encabezados de la solicitud para la autenticación
