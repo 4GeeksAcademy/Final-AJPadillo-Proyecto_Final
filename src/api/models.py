@@ -40,7 +40,7 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # ID único del videojuego
     name = db.Column(db.String(120), nullable=False)  # Nombre del videojuego
     genres = db.Column(db.String(200), nullable=False)  # Géneros del videojuego
-    about = db.Column(db.Text, nullable=False)  # Descripción del videojuego
+    developers = db.Column(db.Text, nullable=False)  # Descripción del videojuego
     # Relación uno a muchos: un videojuego puede tener muchas reseñas
     reviews = db.relationship('Review', backref='game', lazy=True, cascade="all, delete-orphan")
 
@@ -52,7 +52,7 @@ class Game(db.Model):
             "id": self.id,
             "name": self.name,
             "genres": self.genres,
-            "about": self.about,
+            "developers": self.developers,
             "reviews": [review.serialize() for review in self.reviews]
         }
 
